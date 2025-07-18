@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Insurance Quote Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eeb38c;
+      padding: 50px;
+    }
+
+ .container {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3); /* darker shadow */
+  transition: all 0.3s ease; /* smooth effect on hover */
+  backdrop-filter: none; /* fallback */
+  }
+
+/* Hover effect */
+.container:hover {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6); /* dark shadow */
+  backdrop-filter: blur(10px); /* blur content behind (needs transparency) */
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent for blur to show */
+ }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .result, .error {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .result {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+#heading {
+  color: beige;
+  animation: transformation 4s infinite ease-in-out;
+}
+
+/* Define the animation */
+@keyframes transformation {
+  0% {
+    transform: scale(1);
+    letter-spacing: normal;
+    color: beige;
+  }
+  50% {
+    transform: scale(1.1);
+    letter-spacing: 2px;
+    color: #f0e68c; /* Light khaki for soft contrast */
+  }
+  100% {
+    transform: scale(1);
+    letter-spacing: normal;
+    color: beige;
+  }
+}
+
+    
+  </style>
+</head>
+<body>
+    <h2 id=heading>GET YOUR FREE QUOTE NOW!!</h2>
+  <div class="container">
+    <h2>Insurance Quote Form</h2>
+    <form id="quoteForm">
+      <label>Full Name</label>
+      <input type="text" id="name" required>
+
+      <label>Age</label>
+      <input type="number" id="age" required>
+
+      <label>Vehicle Type</label>
+      <select id="vehicle" required>
+        <option value="car">Car</option>
+        <option value="suv">SUV</option>
+        <option value="motorcycle">Motorcycle</option>
+      </select>
+
+      <label>Coverage Level</label>
+      <select id="coverage" required>
+        <option value="basic">Basic</option>
+        <option value="standard">Standard</option>
+        <option value="premium">Premium</option>
+      </select>
+
+      <button type="submit">Get Quote</button>
+    </form>
+
+    <div id="output"></div>
+  </div>
+
+  <script>
+    document.getElementById('quoteForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const age = parseInt(document.getElementById('age').value);
+      const vehicle = document.getElementById('vehicle').value;
+      const coverage = document.getElementById('coverage').value;
+
+      let output = document.getElementById('output');
+      output.innerHTML = '';
+
+      if (age < 18) {
+        output.innerHTML = '<div class="error">You must be at least 18 years old to get insurance.</div>';
+        return;
+      }
+
+      let basePrice = 500;
+
+      // Age adjustment
+      if (age < 25) basePrice += 300;
+      else if (age > 60) basePrice += 200;
+
+      // Vehicle adjustment
+      if (vehicle === "suv") basePrice += 250;
+      else if (vehicle === "motorcycle") basePrice += 400;
+      else basePrice += 100;
+      
+    // Coverage multiplier
+      if (coverage === "standard") basePrice *= 1.3;
+      else if (coverage === "premium") basePrice *= 1.6;
+
+      // Result
+      output.innerHTML = `
+        <div class="result">
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Age:</strong> ${age}</p>
+          <p><strong>Vehicle Type:</strong> ${vehicle.charAt(0).toUpperCase() + vehicle.slice(1)}</p>
+          <p><strong>Coverage:</strong> ${coverage.charAt(0).toUpperCase() + coverage.slice(1)}</p>
+          <p><strong>Estimated Monthly Premium:</strong> R${basePrice.toFixed(2)}</p>
+        </div>
+      `;
+    });
+  </script>
+  
+</body>
+</html>
