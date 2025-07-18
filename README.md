@@ -1,2 +1,2 @@
-# insurance-quote
-an insurance quote from able to estimate your monthly premiums
+# insurance-quote-form
+an insurance quote form able to estimate your monthly premiums.
